@@ -22,8 +22,16 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+private:
 	UPROPERTY(EditAnywhere)
-	int32 sampleInt{12};
+	float platformSpeed{1.0f};
 	UPROPERTY(EditAnywhere)
-	float sampleFloat{.4f};
+	float initialDelay{1.0f};
+	APawn* playerPawn{nullptr};
+	FVector location{};
+	float time;
+	bool ShouldMove(float deltaTime);
+	void Initialise();
+	void MovePlatform(float deltaTime);
+	
 };
