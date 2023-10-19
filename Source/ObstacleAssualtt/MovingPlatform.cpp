@@ -2,7 +2,9 @@
 
 
 #include "MovingPlatform.h"
+#include <vector>
 
+#include "Evaluation/IMovieSceneEvaluationHook.h"
 #include "Logging/StructuredLog.h"
 
 // Sets default values
@@ -30,14 +32,7 @@ void AMovingPlatform::MovePlatform(float deltaTime)
 {
 	if (!ShouldMove(deltaTime))
 		return;
-	location = GetActorLocation();
-	if (playerPawn == nullptr)
-		return;
-
-	const FVector deltaPos = playerPawn->GetActorForwardVector() * platformSpeed * deltaTime + playerPawn->
-		GetActorUpVector()
-		* .1f * deltaTime;
-	location += deltaPos;
+	location = initPos + FMath::Sin(time/period*2*PI) * Amplitude;
 	SetActorLocation(location);
 }
 
@@ -52,10 +47,7 @@ void AMovingPlatform::Initialise()
 {
 	time = 0.0f;
 	playerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-	 FVector deltaPos=
-		 static_cast<UE::Math::TVector4<double>>(200.0f *playerPawn->GetActorForwardVector().Normalize());
-	deltaPos.Z=0.0f;
-	const auto posToPutPlatformAt =
-		playerPawn->GetActorLocation() +deltaPos;
-	SetActorLocation(posToPutPlatformAt);
+	initPos =
+		playerPawn->GetActorLocation() + initOffset;
+	SetActorLocation(initPos);
 }

@@ -24,11 +24,16 @@ public:
 	virtual void Tick(float DeltaTime) override;
 private:
 	UPROPERTY(EditAnywhere)
-	float platformSpeed{1.0f};
-	UPROPERTY(EditAnywhere)
 	float initialDelay{1.0f};
+	UPROPERTY(EditAnywhere)
+	FVector Amplitude{};
+	UPROPERTY(EditAnywhere)
+	FVector initOffset{};
+	UPROPERTY(EditAnywhere)
+	float period;
 	APawn* playerPawn{nullptr};
 	FVector location{};
+	FVector initPos{};
 	float time;
 	bool ShouldMove(float deltaTime);
 	void Initialise();
